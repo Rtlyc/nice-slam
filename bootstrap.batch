@@ -1,0 +1,27 @@
+#!/bin/bash
+#SBATCH --job-name=pythonMPIexample
+#SBATCH --nodes=4
+#SBATCH --ntasks-per-node=2
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=2GB
+#SBATCH --time=01:00:00
+#SBATCH --gres=gpu:1
+
+##module purge
+##module load python/intel/3.8.6
+## module load openmpi/intel/4.0.5
+
+SINGULARITY_IMAGE=/scratch/work/public/singularity/ubuntu-20.04.1.sif
+OVERLAY_FILE=/scratch/work/public/examples/greene-getting-started/overlay-15GB-500K-pytorch.ext3
+
+## Note: this overlay file has PyTorch installed using command
+## conda install pytorch torchvision torchaudio cudatoolkit=11.1 -c pytorch -c nvidia
+
+## Run interactively
+singularity exec --overlay $OVERLAY_FILE $SINGULARITY_IMAGE /bin/bash
+source /ext3/miniconda3/bin/activate
+
+## source /home/yl5680/nice-slam/test_venv/bin/activate
+
+bash scripts/download_vis_apartment.sh
+srun python visualizer.py configs/Apartment/apartment.yaml --output output/vis/Apartment
