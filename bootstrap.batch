@@ -10,7 +10,7 @@
 
 module purge
 
-singularity exec --overlay /scratch/yl5680/overlay-15GB-500K.ext3:rw /scratch/work/public/singularity/cuda11.2.2-cudnn8-devel-ubuntu20.04.sif /bin/bash -c "source /ext3/env.sh; python test.py"
+singularity exec --overlay /scratch/yl5680/overlay-15GB-500K.ext3:rw /scratch/work/public/singularity/cuda11.2.2-cudnn8-devel-ubuntu20.04.sif /bin/bash -c "source /ext3/env.sh; python visualizer.py configs/Apartment/apartment.yaml --output output/vis/Apartment"
 
 ## bash scripts/download_vis_apartment.sh; 
 ## python visualizer.py configs/Apartment/apartment.yaml --output output/vis/Apartment
